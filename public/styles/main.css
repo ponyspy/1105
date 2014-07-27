@@ -1,0 +1,43 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.cub {
+		width: 50%;
+		height: 50%;
+		position: absolute;
+}
+
+.number {
+	text-align: center;
+	font: 160pt/260pt Helvetica;
+	font-weight: bold;
+}
+
+.cub:nth-child(odd) .number {
+	-webkit-transform:rotate(180deg);
+}
+
+.black {
+	background-color: black;
+	color: white;
+}
+
+.white {
+	background-color: white;
+	color: black
+}
+
+.cub:nth-child(2) {
+	left: 50%;
+}
+
+.cub:nth-child(3) {
+	top: 50%;
+	left: 50%;
+}
+
+.cub:nth-child(4) {
+	top: 50%;
+}
