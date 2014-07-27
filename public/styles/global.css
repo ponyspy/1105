@@ -1,3 +1,8 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
 .menu_block {
 	position: absolute;
 	width: 50px;

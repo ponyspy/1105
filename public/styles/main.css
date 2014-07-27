@@ -1,7 +1,7 @@
-body {
-	margin: 0;
-	padding: 0;
-}
+/*
+	Cubs block
+ */
+
 
 .cub {
 		width: 50%;
@@ -40,4 +40,45 @@ body {
 
 .cub:nth-child(4) {
 	top: 50%;
+}
+
+
+/*
+	Buy items block
+ */
+
+
+.buy_items {
+	width: 90%;
+	height: 90%;
+	margin-top: 20px;
+	float: left;
+	overflow: hidden;
+	/*outline: 1px solid red;*/
+}
+
+
+.buy_item {
+	overflow: hidden;
+}
+
+
+.buy_title {
+	margin-left: 10px;
+	text-transform: uppercase;
+	-webkit-transform:rotate(90deg);
+	-webkit-transform-origin: 10px;
+	font: 14pt/16pt Helvetica;
+	font-weight: bold;
+	position: absolute;
+	/*outline: 1px solid red;*/
+}
+
+.bb {
+	width: 100%;
+	height: 330px;
+	margin-left: 50px;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
