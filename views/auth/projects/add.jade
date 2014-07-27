@@ -1,0 +1,35 @@
+extends ../../layout
+
+block title
+	title ДОБАВИТЬ ПРОЕКТ
+
+block content_style
+	link(rel="stylesheet", type="text/css", href="/styles/popclip.css" + version)
+	link(rel='stylesheet', type='text/css', href='/styles/edit.css' + version)
+
+block content_scripts
+	script(type="text/javascript", src='/scripts/jquery.popline.min.js' + version)
+	script(type='text/javascript', src='/scripts/jquery.filedrop.js' + version)
+	script(type='text/javascript', src='/scripts/edit.js' + version)
+
+block content_right
+	.form_options
+		input.form_old(type='checkbox', name='old', value='true')
+		|архив
+		.separator_title Категория:
+		select.form_category(name='category')
+			option(value='') нет
+			option(value='altai') Алтайский край
+			option(value='belg') Белгородская область
+
+block content
+	.edit_project_block
+		input#image_main_fallback(type='file')
+		a.back_link(href='/auth/projects') < Назад
+		.title ДОБАВИТЬ ПРОЕКТ
+		.form_image_main
+		.form_title(contenteditable=true) Заголовок
+		.form_description(contenteditable=true) Описание
+		.form_images_second
+		.form_images_maps
+		.submit Добавить

@@ -1,0 +1,33 @@
+{
+  "name": "kuza",
+  "version": "0.0.0",
+  "description": "Kuza =====",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "cookie-parser": "^1.3.2",
+    "express": "^4.6.1",
+    "express-session": "^1.6.5",
+    "async": "^0.7.0",
+    "gm": "^1.16.0",
+    "jade": "^1.3.1",
+    "method-override": "^1.0.2",
+    "mongoose": "^3.8.12",
+    "multer": "^0.1.2",
+    "i18next": "^1.7.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nrdn/kuza.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nrdn/kuza/issues"
+  },
+  "homepage": "https://github.com/nrdn/kuza"
+}
