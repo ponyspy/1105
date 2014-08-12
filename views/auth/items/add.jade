@@ -1,7 +1,7 @@
 extends ../../layout
 
 block title
-	title РЕДАКТИРОВАТЬ ПРОЕКТ
+	title ДОБАВИТЬ ТОВАР
 
 block content_style
 	link(rel='stylesheet', type='text/css', href='/styles/add.css')
@@ -11,7 +11,7 @@ block content_scripts
 
 block content_right
 	.navigator
-		.nav_title РАБОТА
+		.nav_title ТОВАР
 		.nav_project_children
 		br
 		b.nav_settings_title настройки
@@ -21,23 +21,23 @@ block content_right
 
 block content
 	.form_block
-		a.back_link(href='/auth/projects') < Назад
-		.title РЕДАКТИРОВАТЬ ПРОЕКТ
-		form(action="", method="post")
+		a.back_link(href='/auth/items') < Назад
+		.title ДОБАВИТЬ ТОВАР
+		form(action="/auth/items/add", enctype="multipart/form-data", method="post")
 			.form_title Название:
-			input.ru(type="text", name="ru[title]", value=project.title.ru)
+			input.ru(type="text", name="ru[title]",)
 			input.en(type="text", name="en[title]", disabled)
 			.form_title Описание:
-			textarea.ru(name="ru[description]", rows="8",)=project.description.ru
+			textarea.ru(name="ru[description]", rows="8",)
 			textarea.en(name="en[description]", rows="8", disabled)
-			.form_title Прошлые:
-			input(type='checkbox', name='old', value='true', checked=project.old)
-			|архив
 			.form_title Категория:
 			select(name='category')
-				option(value='') нет
-				option(value='altai') Алтайский край
-				option(value='belg') Белгородская область
+				option(value='l_up') левый верхний
+				option(value='r_up') правый верхний
+				option(value='l_dw') левый нижний
+				option(value='r_dw') правый нижний
+			.form_title Фото:
+			input(type="file", name="image", accept="image/*")
 			br
 			br
 			input(type='submit', value='отправить')

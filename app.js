@@ -26,7 +26,7 @@ app.use(methodOverride());
 app.use(cookieParser());
 
 app.use(session({
-  key: 'kuzmin.sess',
+  key: '1105.sess',
   resave: false,
   saveUninitialized: false,
   secret: 'keyboard cat',
@@ -163,61 +163,57 @@ app.route('/auth').get(checkAuth, function (req, res) {
 
 
 // ------------------------
-// *** Admin Projects Block ***
+// *** Admin Items Block ***
 // ------------------------
 
 
-app.route('/auth/projects').get(checkAuth, function(req, res) {
-  Project.find().exec(function(err, projects) {
-    res.render('auth/projects', {projects: projects});
+app.route('/auth/items').get(checkAuth, function(req, res) {
+  Item.find().exec(function(err, items) {
+    res.render('auth/items', {items: items});
   });
 });
 
 
 // ------------------------
-// *** Add Projects Block ***
+// *** Add Item Block ***
 // ------------------------
 
 
-var add_project = app.route('/auth/projects/add');
+var add_item = app.route('/auth/items/add');
 
-add_project.get(checkAuth, function(req, res) {
-  res.render('auth/projects/add.jade');
+add_item.get(checkAuth, function(req, res) {
+  res.render('auth/items/add.jade');
 });
 
-add_project.post(checkAuth, function(req, res) {
-  var project = new Project();
+add_item.post(checkAuth, function(req, res) {
+  var item = new Item();
   var post = req.body;
   var files = req.files;
 
-  project.title.ru = post.ru.title;
-  project.description.ru = post.ru.description;
-  project.category = post.category;
-
-  project.save(function(err, project) {
-    res.send(project);
-  });
+  item.title.ru = post.ru.title;
+  item.description.ru = post.ru.description;
+  item.category = post.category;
 
 
-  // if (files.image.size != 0) {
-  //   var newPath = __dirname + '/public/images/projects/' + project._id + '/main.jpg';
+  if (files.image.size != 0) {
+    var newPath = __dirname + '/public/images/items/' + item._id + '/main.jpg';
 
-  //   fs.mkdir(__dirname + '/public/images/projects/' + project._id, function() {
-  //     gm(files.image.path).resize(1600, false).quality(80).noProfile().write(newPath, function() {
-  //       project.images.main = '/images/projects/' + project._id + '/main.jpg';
-  //       project.save(function() {
-  //         fs.unlink(files.image.path);
-  //         res.redirect('/auth/projects');
-  //       });
-  //     });
-  //   });
-  // }
-  // else {
-  //   project.save(function() {
-  //     fs.unlink(files.image.path);
-  //     res.redirect('/auth/projects');
-  //   });
-  // }
+    fs.mkdir(__dirname + '/public/images/items/' + item._id, function() {
+      gm(files.image.path).resize(1600, false).quality(80).noProfile().write(newPath, function() {
+        item.image = '/images/items/' + item._id + '/main.jpg';
+        item.save(function() {
+          fs.unlink(files.image.path);
+          res.redirect('/auth/items');
+        });
+      });
+    });
+  }
+  else {
+    item.save(function() {
+      fs.unlink(files.image.path);
+      res.redirect('/auth/items');
+    });
+  }
 
 
 });

@@ -18,7 +18,7 @@ var itemSchema = new Schema({
 		ru: String,
 		en: String
 	},
-	images: [String],
+	image: String,
 	category: String,
 	store: [{
 		size: String,
