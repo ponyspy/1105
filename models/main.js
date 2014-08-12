@@ -20,10 +20,12 @@ var itemSchema = new Schema({
 	},
 	image: String,
 	category: String,
-	store: [{
-		size: String,
-		count: Number
-	}],
+	size: {
+		s: Number,
+		m: Number,
+		l: Number,
+		xl: Number
+	},
 	date: {type: Date, default: Date.now},
 });
 

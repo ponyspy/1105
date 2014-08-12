@@ -193,9 +193,10 @@ add_item.post(checkAuth, function(req, res) {
   item.title.ru = post.ru.title;
   item.description.ru = post.ru.description;
   item.category = post.category;
+  item.size = post.size;
 
 
-  if (files.image.size != 0) {
+  if (files.image) {
     var newPath = __dirname + '/public/images/items/' + item._id + '/main.jpg';
 
     fs.mkdir(__dirname + '/public/images/items/' + item._id, function() {
@@ -210,7 +211,7 @@ add_item.post(checkAuth, function(req, res) {
   }
   else {
     item.save(function() {
-      fs.unlink(files.image.path);
+      // fs.unlink(files.image.path);
       res.redirect('/auth/items');
     });
   }
@@ -220,34 +221,51 @@ add_item.post(checkAuth, function(req, res) {
 
 
 // ------------------------
-// *** Edit Projects Block ***
+// *** Edit Items Block ***
 // ------------------------
 
 
-var edit_projects = app.route('/auth/projects/edit/:project_id');
+var edit_items = app.route('/auth/items/edit/:item_id');
 
-edit_projects.get(checkAuth, function(req, res) {
-  var id = req.params.project_id;
+edit_items.get(checkAuth, function(req, res) {
+  var id = req.params.item_id;
 
-  Project.findById(id).exec(function(err, project) {
-    res.render('auth/projects/edit.jade', {project: project});
+  Item.findById(id).exec(function(err, item) {
+    res.render('auth/items/edit.jade', {item: item});
   });
 });
 
-edit_projects.post(checkAuth, function(req, res) {
-  var id = req.params.project_id;
+edit_items.post(checkAuth, function(req, res) {
+  var id = req.params.item_id;
   var post = req.body;
+  var files = req.files;
 
-  Project.findById(id).exec(function(err, project) {
+  Item.findById(id).exec(function(err, item) {
 
-    project.title.ru = post.ru.title;
-    project.description.ru = post.ru.description;
-    project.category = post.category;
-    project.old = post.old;
+    item.title.ru = post.ru.title;
+    item.description.ru = post.ru.description;
+    item.category = post.category;
+    item.size = post.size;
 
-    project.save(function(err, project) {
-      res.redirect('/auth/projects');
-    });
+    if (files.image) {
+      var newPath = __dirname + '/public/images/items/' + item._id + '/main.jpg';
+
+      fs.mkdir(__dirname + '/public/images/items/' + item._id, function() {
+        gm(files.image.path).resize(1600, false).quality(80).noProfile().write(newPath, function() {
+          item.image = '/images/items/' + item._id + '/main.jpg';
+          item.save(function() {
+            fs.unlink(files.image.path);
+            res.redirect('/auth/items');
+          });
+        });
+      });
+    }
+    else {
+      item.save(function() {
+        // fs.unlink(files.image.path);
+        res.redirect('/auth/items');
+      });
+    }
 
   });
 });

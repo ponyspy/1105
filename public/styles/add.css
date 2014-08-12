@@ -123,3 +123,19 @@ input, textarea, select {
 	display: none;
 	margin-left: 40px;
 }
+
+.size_block {
+	overflow: hidden;
+}
+
+.size_title {
+	margin-top: 5px;
+	float: left;
+	margin-right: 10px;
+}
+
+.size {
+	float: left;
+	width: 60px;
+	margin-right: 10px;
+}
