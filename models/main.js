@@ -20,6 +20,7 @@ var itemSchema = new Schema({
 	},
 	image: String,
 	category: String,
+	price: Number,
 	size: {
 		s: Number,
 		m: Number,
@@ -27,6 +28,13 @@ var itemSchema = new Schema({
 		xl: Number
 	},
 	date: {type: Date, default: Date.now},
+});
+
+var orderSchema = new Schema({
+	item: { type: Schema.Types.ObjectId, ref: 'Item' },
+	adress: String,
+	email: String,
+	date: {type: Date, default: Date.now}
 });
 
 
@@ -37,3 +45,4 @@ var itemSchema = new Schema({
 
 module.exports.User = mongoose.model('User', userSchema);
 module.exports.Item = mongoose.model('Item', itemSchema);
+module.exports.Order = mongoose.model('Order', orderSchema);

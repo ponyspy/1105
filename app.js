@@ -82,6 +82,7 @@ app.use(function(req, res, next) {
 
 var User = models.User;
 var Item = models.Item;
+var Order = models.Order;
 
 
 // ------------------------
@@ -122,12 +123,26 @@ var deleteFolderRecursive = function(path) {
 // ------------------------
 
 
-app.route('/upload').post(function(req, res) {
-  var files = req.files;
+app.route('/get_item').post(function(req, res) {
+  var id = req.body.id;
 
-  console.log(files);
+  Item.findById(id).lean().exec(function(err, item) {
+    res.send(item);
+  });
 });
 
+app.route('/submit_order').post(function(req, res) {
+  var post = req.body;
+  var order = new Order();
+
+  order.item = post.item;
+  order.adress = post.adress;
+  order.email = post.email;
+
+  order.save(function(err, order) {
+    res.send(order);
+  });
+});
 
 // ------------------------
 // *** Index Block ***
@@ -135,10 +150,10 @@ app.route('/upload').post(function(req, res) {
 
 
 app.route('/').get(function(req, res) {
-  res.render('main');
+  Item.find().exec(function(err, items) {
+    res.render('main', {items: items});
+  });
 });
-
-
 
 
 // ------------------------
@@ -193,6 +208,7 @@ add_item.post(checkAuth, function(req, res) {
   item.title.ru = post.ru.title;
   item.description.ru = post.ru.description;
   item.category = post.category;
+  item.price = post.price;
   item.size = post.size;
 
 
@@ -245,6 +261,7 @@ edit_items.post(checkAuth, function(req, res) {
     item.title.ru = post.ru.title;
     item.description.ru = post.ru.description;
     item.category = post.category;
+    item.price = post.price;
     item.size = post.size;
 
     if (files.image) {

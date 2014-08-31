@@ -55,11 +55,16 @@
 	float: left;
 	overflow: hidden;
 	display: none;
+	position: relative;
 }
 
 
 .buy_item {
 	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	position: absolute;
 }
 
 
