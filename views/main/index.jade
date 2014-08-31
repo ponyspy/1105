@@ -11,12 +11,13 @@ block content_scripts
 
 
 block content
-	.cub.black: .number 1
+	.cub.black: .logo_main 1
 	.cub.white
-		.number 1
+		.logo_main 1
 		.buy_items
-			.buy_item
+			.buy_item(id='item_id')
+				.buy_btn buy
 				.buy_title Супер футболка
-				.bb(style='background-image: url(/images/design/1.jpg)')
-	.cub.black: .number 5
-	.cub.white: .number 0
+				.buy_image(style='background-image: url(/images/design/1.jpg)')
+	.cub.black: .logo_main 5
+	.cub.white: .logo_main 0

@@ -9,13 +9,13 @@
 		position: absolute;
 }
 
-.number {
+.logo_main {
 	text-align: center;
 	font: 160pt/260pt Helvetica;
 	font-weight: bold;
 }
 
-.cub:nth-child(odd) .number {
+.cub:nth-child(odd) .logo_main {
 	-webkit-transform:rotate(180deg);
 }
 
@@ -74,11 +74,39 @@
 	/*outline: 1px solid red;*/
 }
 
-.bb {
+.buy_image {
 	width: 100%;
 	height: 330px;
 	margin-left: 50px;
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
+}
+
+.buy_btn {
+	position: absolute;
+	left: 8px;
+	bottom: 22px;
+	font: 12pt/14pt Helvetica;
+	cursor: pointer;
+	padding: 2px;
+	border: 1px solid black;
+}
+
+.buy_btn:hover {
+	background-color: black;
+	color: white;
+}
+
+.order_block {
+	width: 550px;
+	height: 400px;
+	position: absolute;
+	background-color: white;
+	z-index: 99999999;
+	display: none;
+	left: 50%;
+	top: 25%;
+	margin-left: -275px;
+	border: 5px solid black;
 }
