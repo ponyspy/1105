@@ -49,9 +49,9 @@
 
 
 .buy_items {
-	width: 90%;
-	height: 90%;
-	margin-top: 20px;
+	width: 100%;
+	height: 100%;
+	/*margin-top: 20px;*/
 	float: left;
 	overflow: hidden;
 	display: none;
@@ -72,11 +72,12 @@
 }
 
 .buy_title {
+	margin-top: 10px;
 	margin-left: 10px;
 	text-transform: uppercase;
 	-webkit-transform:rotate(90deg);
 	-webkit-transform-origin: 10px;
-	font: 14pt/16pt Helvetica;
+	font: 18pt/18pt Helvetica;
 	font-weight: bold;
 	position: absolute;
 	/*outline: 1px solid red;*/
@@ -84,7 +85,7 @@
 
 .buy_image {
 	width: 100%;
-	height: 330px;
+	height: 100%;
 	margin-left: 50px;
 	cursor: pointer;
 	background-size: cover;
@@ -94,9 +95,9 @@
 
 .buy_btn {
 	position: absolute;
-	left: 8px;
-	bottom: 4px;
-	font: 12pt/14pt Helvetica;
+	left: 10px;
+	bottom: 10px;
+	font: 10pt/12pt Helvetica;
 	cursor: pointer;
 	padding: 2px;
 	border: 1px solid black;
