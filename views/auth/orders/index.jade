@@ -1,0 +1,22 @@
+extends ../../layout
+
+block title
+	title СПИСОК ЗАКАЗОВ
+
+block content_style
+	link(rel='stylesheet', type='text/css', href='/styles/add.css')
+
+block content_scripts
+	script(type='text/javascript', src='/scripts/lists.js')
+
+block content
+	a.back_link(href='/auth') < Назад
+	.title СПИСОК ЗАКАЗОВ
+	br
+	br
+	.main_menu_block
+		each order in orders
+			.order
+				a.rm_order(href='#', id=order._id)= 'удалить '
+				!=' | '
+				a(href='/auth/orders/' + order._id)= order.items[0].item_id.title.ru

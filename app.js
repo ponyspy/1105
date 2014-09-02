@@ -135,7 +135,10 @@ app.route('/submit_order').post(function(req, res) {
   var post = req.body;
   var order = new Order();
 
-  order.item = post.item;
+  order.items.push({
+    item_id: post.item,
+    size: post.size
+  });
   order.adress = post.adress;
   order.email = post.email;
 
@@ -174,6 +177,31 @@ app.route('/lang/:locale').get(function(req, res) {
 
 app.route('/auth').get(checkAuth, function (req, res) {
   res.render('auth');
+});
+
+
+// ------------------------
+// *** Admin Orders Block ***
+// ------------------------
+
+
+app.route('/auth/orders').get(checkAuth, function(req, res) {
+  Order.find().populate('items.item_id').exec(function(err, orders) {
+    res.render('auth/orders', {orders: orders});
+  });
+});
+
+// ------------------------
+// *** Orders list Block ***
+// ------------------------
+
+
+app.route('/auth/orders/:id').get(checkAuth, function(req, res) {
+  var id = req.params.id;
+
+  Order.findById(id).populate('items.item_id').exec(function(err, order) {
+    res.render('auth/orders/order.jade', {order: order});
+  });
 });
 
 

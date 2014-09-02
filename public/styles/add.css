@@ -12,7 +12,8 @@ a,b {
 	min-height: 600px;
 	background-color: white;
 	padding-bottom: 100px;
-	/*border: 1px solid black;*/
+	border: 1px solid black;
+	margin: 0 auto;
 }
 
 .head_title_block {

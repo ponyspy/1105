@@ -22,3 +22,7 @@ body {
 	margin: 20px auto;
 	cursor: pointer;
 }
+
+.order_block {
+	display: none;
+}

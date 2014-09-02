@@ -1,0 +1,25 @@
+extends ../../layout
+
+block title
+	title ДОБАВИТЬ ТОВАР
+
+block content_style
+	link(rel='stylesheet', type='text/css', href='/styles/add.css')
+
+block content_scripts
+	script(type='text/javascript', src='/scripts/add.js')
+
+block content
+	a.back_link(href='/auth/orders') < Назад
+	.title= order.items[0].item_id.title.ru
+	.form_title Дата заказа:
+	.date= order.date.getDate() + '.' + order.date.getMonth() + '.' + order.date.getFullYear()
+	.form_title Адрес доставки:
+	.adres= order.adress
+	.form_title E-mail:
+	a.email(href='mailto:' + order.email)= order.email
+	.form_title Размер:
+	.size= order.items[0].size
+	br
+	.form_title Цена:
+	.price= order.items[0].item_id.price

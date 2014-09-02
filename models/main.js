@@ -31,7 +31,10 @@ var itemSchema = new Schema({
 });
 
 var orderSchema = new Schema({
-	item: { type: Schema.Types.ObjectId, ref: 'Item' },
+	items: [{
+		item_id: { type: Schema.Types.ObjectId, ref: 'Item' },
+		size: String
+	}],
 	adress: String,
 	email: String,
 	date: {type: Date, default: Date.now}

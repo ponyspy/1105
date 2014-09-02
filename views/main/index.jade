@@ -10,15 +10,29 @@ block content_scripts
 	script(type='text/javascript', src='/scripts/main.js' + version)
 
 
+mixin getItems(category)
+	each item in items
+		if (item.category == category)
+			.buy_item(id=item._id)
+				.buy_btn buy
+				.buy_title= item.title.ru
+				.buy_image(style='background-image: url(' + item.image + ')')
+
+
 block content
-	.cub.black: .logo_main 1
+	.cub.black
+		.logo_main 1
+		.buy_items
+			+getItems('l_up')
 	.cub.white
 		.logo_main 1
 		.buy_items
-			each item in items
-				.buy_item(id=item._id)
-					.buy_btn buy
-					.buy_title= item.title.ru
-					.buy_image(style='background-image: url(' + item.image + ')')
-	.cub.black: .logo_main 5
-	.cub.white: .logo_main 0
+			+getItems('r_up')
+	.cub.black
+		.logo_main 5
+		.buy_items
+			+getItems('l_dw')
+	.cub.white
+		.logo_main 0
+		.buy_items
+			+getItems('r_dw')

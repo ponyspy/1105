@@ -12,7 +12,11 @@ html
 				.order_title
 				.order_image
 				.order_price
-				.order_sizes
+				select.order_size(name='size')
+					option(value='s') S
+					option(value='m') M
+					option(value='l') L
+					option(value='xl') XL
 				input.order_email(type='text', placeholder='e-mail')
 				input.order_adress(type='text', placeholder='Адрес доставки')
 				button.submit_order Купить
