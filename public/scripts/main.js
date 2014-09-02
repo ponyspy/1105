@@ -6,6 +6,20 @@ $(document).ready(function() {
 		return Math.round(rand);
 	}
 
+	var validate = {
+		email: 	function (email) {
+			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			return re.test(email);
+		},
+		phone: function(phone) {
+			var re1 = /^\d{10}$/;
+			var re2 = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+			var re3 = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+
+			return re1.test(phone);
+		}
+	}
+
 	$('.logo_main').click(function(event) {
 		$(this).hide();
 		$(this).next('.buy_items').show();
@@ -38,10 +52,15 @@ $(document).ready(function() {
 		var email = $('.order_email').val();
 		var adress = $('.order_adress').val();
 		var size = $('.order_size').find(':selected').val();
+		var valid = validate.email(email);
 
-		$.post('/submit_order', {item: item, size: size, adress: adress, email: email}).done(function(order) {
-				alert(order);
-				$('.order_block').hide();
-		});
+		if (valid) {
+			$.post('/submit_order', {item: item, size: size, adress: adress, email: email}).done(function(order) {
+					$('.order_block').hide();
+			});
+		}
+		else {
+			$('.order_email').css('border', '2px solid red');
+		}
 	});
 });

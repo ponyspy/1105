@@ -123,6 +123,7 @@
 .order_block {
 	width: 550px;
 	height: 400px;
+	padding: 10px;
 	position: absolute;
 	background-color: white;
 	z-index: 99999999;
@@ -130,4 +131,21 @@
 	top: 25%;
 	margin-left: -275px;
 	border: 5px solid black;
+}
+
+.order_block input, button {
+	display: block;
+	margin-top: 10px;
+	font: 14pt/16pt Helvetica;
+	outline: none;
+}
+
+.order_title {
+	font: 18pt/20pt Helvetica;
+	font-weight: bold;
+}
+
+.order_block_title {
+	float: left;
+	margin-right: 5px;
 }
