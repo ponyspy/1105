@@ -180,6 +180,33 @@ app.route('/auth').get(checkAuth, function (req, res) {
 });
 
 
+
+// ------------------------
+// *** Admin Design Block ***
+// ------------------------
+
+var edit_design = app.route('/auth/design');
+
+edit_design.get(checkAuth, function(req, res) {
+  res.render('auth/design');
+});
+
+edit_design.post(checkAuth, function(req, res) {
+  var files = req.files;
+
+  if (files.l_up)
+    fs.rename(files.l_up.path, __dirname + '/public/images/design/main/l_up.jpg');
+  if (files.r_up)
+    fs.rename(files.r_up.path, __dirname + '/public/images/design/main/r_up.jpg');
+  if (files.l_dw)
+    fs.rename(files.l_dw.path, __dirname + '/public/images/design/main/l_dw.jpg');
+  if (files.r_dw)
+    fs.rename(files.r_dw.path, __dirname + '/public/images/design/main/r_dw.jpg');
+
+  res.redirect('back');
+});
+
+
 // ------------------------
 // *** Admin Orders Block ***
 // ------------------------

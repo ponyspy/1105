@@ -1,0 +1,27 @@
+extends ../../layout
+
+block title
+	title ДОБАВИТЬ ТОВАР
+
+block content_style
+	link(rel='stylesheet', type='text/css', href='/styles/add.css')
+
+block content_scripts
+	script(type='text/javascript', src='/scripts/add.js')
+
+block content
+	.form_block
+		a.back_link(href='/auth/design') < Назад
+		.title ВИД ГЛАВНОЙ СТРАНИЦЫ
+		form(action="/auth/design", enctype="multipart/form-data", method="post")
+			.form_title Левый верхний:
+			input(type="file", name="l_up",)
+			.form_title Правый верхний:
+			input(type="file", name="r_up",)
+			.form_title Левый нижний:
+			input(type="file", name="l_dw",)
+			.form_title Правый нижний:
+			input(type="file", name="r_dw",)
+			br
+			br
+			input(type='submit', value='отправить')
