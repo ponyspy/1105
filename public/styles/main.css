@@ -88,15 +88,16 @@
 	height: 100%;
 	margin-left: 50px;
 	cursor: pointer;
-	background-size: 100%;
+	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
 	-webkit-transition-duration: 0.5s;
+	-webkit-transform-origin: 50%;
 }
 
 .buy_image:hover {
-	background-size: 125%;
-	-webkit-transition-duration: 0.5s;
+	-webkit-transform: scale(1.2);
+	-webkit-transition-duration: 0.4s;
 }
 
 .buy_btn {
