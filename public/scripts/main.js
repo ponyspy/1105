@@ -1,22 +1,26 @@
 $(document).ready(function() {
 	var id;
 
-	function getRand(min, max) {
-		var rand = min - 0.5 + Math.random()*(max-min+1)
-		return Math.round(rand);
+	var random = {
+		buf: 0,
+		get: function(min, max) {
+			var rand = min - 0.5 + Math.random()*(max-min+1);
+			var res = Math.round(rand);
+
+			if (this.buf != res) {
+				this.buf = res;
+				return res;
+			}
+			else {
+				return this.get.call(random, min, max);
+			}
+		}
 	}
 
 	var validate = {
 		email: 	function (email) {
 			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			return re.test(email);
-		},
-		phone: function(phone) {
-			var re1 = /^\d{10}$/;
-			var re2 = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-			var re3 = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-
-			return re1.test(phone);
 		}
 	}
 
@@ -32,7 +36,7 @@ $(document).ready(function() {
 
 	$('.buy_image').click(function(event) {
 		var buy_items = $(this).closest('.buy_items').children('.buy_item');
-		var rand = getRand(0, buy_items.length - 1);
+		var rand = random.get(0, buy_items.length - 1);
 
 		buy_items.hide().eq(rand).show();
 	});
