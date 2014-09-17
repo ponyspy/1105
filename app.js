@@ -1,6 +1,7 @@
 var fs = require('fs');
 var gm = require('gm').subClass({ imageMagick: true });
 var async = require('async');
+var Email = require('email').Email;
 
 var mongoose = require('mongoose'),
     models = require('./models/main.js');
@@ -144,7 +145,16 @@ app.route('/submit_order').post(function(req, res) {
   order.name = post.name;
 
   order.save(function(err, order) {
-    res.send(order);
+    var orderMsg = new Email({
+      from: 'me@example.com',
+      to: 'desade4me@gmail.com',
+      subject: "Knock knock...",
+      body: "Who's there?"
+    });
+
+    orderMsg.send(function(err){
+      res.send(order);
+    });
   });
 });
 
