@@ -53,18 +53,19 @@ $(document).ready(function() {
 
 	$('.submit_order').click(function() {
 		var item = id;
+		var name = $('.order_name').val();
 		var email = $('.order_email').val();
 		var adress = $('.order_adress').val();
 		var size = $('.order_size').find(':selected').val();
 		var valid = validate.email(email);
 
 		if (valid) {
-			$.post('/submit_order', {item: item, size: size, adress: adress, email: email}).done(function(order) {
+			$.post('/submit_order', {item: item, size: size, adress: adress, name: name, email: email}).done(function(order) {
 					$('.order_block').hide();
 			});
 		}
 		else {
-			$('.order_email').css('border', '2px solid red');
+			$('.order_email').addClass('invalid');
 		}
 	});
 });

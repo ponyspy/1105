@@ -15,11 +15,14 @@ body {
 
 .logo {
 	width: 30px;
-	height: 30px;
-	border-radius: 50px;
+	height: 45px;
+	color: white;
+	font: 12pt/18pt Helvetica;
+	font-weight: bold;
+	text-align: center;
 	background-color: black;
 	position: relative;
-	margin: 20px auto;
+	margin: 15px auto;
 	cursor: pointer;
 }
 

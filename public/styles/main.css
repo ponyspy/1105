@@ -1,3 +1,18 @@
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: white;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: white;
+   opacity: 1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: white;
+   opacity: 1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color: white;
+}
+
 /*
 	Cubs block
  */
@@ -13,6 +28,7 @@
 	text-align: center;
 	font: 160pt/260pt Helvetica;
 	font-weight: bold;
+	cursor: pointer;
 }
 
 .cub:nth-child(odd) .logo_main {
@@ -76,7 +92,7 @@
 	margin-left: 10px;
 	text-transform: uppercase;
 	-webkit-transform:rotate(90deg);
-	-webkit-transform-origin: 10px;
+	-webkit-transform-origin: 10px 15px;
 	font: 18pt/18pt Helvetica;
 	font-weight: bold;
 	position: absolute;
@@ -133,7 +149,7 @@
 	height: 400px;
 	padding: 10px;
 	position: absolute;
-	background-color: white;
+	background-color: black;
 	z-index: 99999999;
 	left: 50%;
 	top: 25%;
@@ -141,19 +157,51 @@
 	border: 5px solid black;
 }
 
-.order_block input, button {
+.order_block input {
 	display: block;
 	margin-top: 10px;
-	font: 14pt/16pt Helvetica;
+	font: 12pt/16pt Helvetica;
 	outline: none;
+	width: 300px;
+	background-color: black;
+	color: white;
+	border: none;
+	border-bottom: 2px solid white;
+}
+
+input.invalid {
+	border-bottom: 2px solid red;
+}
+
+.submit_order {
+	font: 12pt/14pt Helvetica;
+	color: white;
+	cursor: pointer;
+	margin-top: 20px;
+}
+
+.submit_order:hover {
+	text-decoration: underline;
 }
 
 .order_title {
-	font: 18pt/20pt Helvetica;
+	font: 18pt/18pt Helvetica;
+	margin-bottom: 20px;
 	font-weight: bold;
+	text-transform: uppercase;
+	color: white;
+}
+
+.order_price {
+	color: white;
+	font: 12pt/14pt Helvetica;
 }
 
 .order_block_title {
 	float: left;
+/*	margin-top: 10px;
+	margin-bottom: 10px;*/
 	margin-right: 5px;
+	color: white;
+	font: 10pt/12pt Helvetica;
 }

@@ -141,6 +141,7 @@ app.route('/submit_order').post(function(req, res) {
   });
   order.adress = post.adress;
   order.email = post.email;
+  order.name = post.name;
 
   order.save(function(err, order) {
     res.send(order);

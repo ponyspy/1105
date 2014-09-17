@@ -35,6 +35,7 @@ var orderSchema = new Schema({
 		item_id: { type: Schema.Types.ObjectId, ref: 'Item' },
 		size: String
 	}],
+	name: String,
 	adress: String,
 	email: String,
 	date: {type: Date, default: Date.now}
