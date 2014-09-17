@@ -146,7 +146,7 @@ app.route('/submit_order').post(function(req, res) {
 
   order.save(function(err, order) {
     var orderMsg = new Email({
-      from: 'me@example.com',
+      from: 'order@1105.ru',
       to: 'desade4me@gmail.com',
       subject: "Knock knock...",
       body: "Who's there?"
@@ -191,10 +191,10 @@ app.route('/auth').get(checkAuth, function (req, res) {
 });
 
 
-
 // ------------------------
 // *** Admin Design Block ***
 // ------------------------
+
 
 var edit_design = app.route('/auth/design');
 
@@ -228,6 +228,7 @@ app.route('/auth/orders').get(checkAuth, function(req, res) {
     res.render('auth/orders', {orders: orders});
   });
 });
+
 
 // ------------------------
 // *** Orders list Block ***
