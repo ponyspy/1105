@@ -148,8 +148,8 @@ app.route('/submit_order').post(function(req, res) {
     var orderMsg = new Email({
       from: 'order@1105.ru',
       to: 'desade4me@gmail.com',
-      subject: "Knock knock...",
-      body: "Who's there?"
+      subject: "Новый заказ!",
+      body: 'Имя: ' + order.name + '\n\n' + 'E-mail: ' + order.email + '\n\n' + 'Адрес доставки: ' + order.adress
     });
 
     orderMsg.send(function(err){
