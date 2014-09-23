@@ -20,19 +20,19 @@ mixin getItems(category)
 
 
 block content
-	.cub.black
-		.logo_main 1
+	.cub.black.image.rotate
+		.logo_main(style='background-image: url(/images/design/main/l_up.jpg)') 1
 		.buy_items
 			+getItems('l_up')
 	.cub.white
-		.logo_main 1
+		.logo_main(style='background-image: url(/images/design/main/r_up.jpg)') 1
 		.buy_items
 			+getItems('r_up')
-	.cub.black
-		.logo_main 5
+	.cub.black.rotate
+		.logo_main(style='background-image: url(/images/design/main/r_dw.jpg)') 5
 		.buy_items
 			+getItems('r_dw')
 	.cub.white
-		.logo_main 0
+		.logo_main(style='background-image: url(/images/design/main/l_dw.jpg)') 0
 		.buy_items
 			+getItems('l_dw')

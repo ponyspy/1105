@@ -29,10 +29,16 @@
 	font: 160pt/260pt Helvetica;
 	font-weight: bold;
 	cursor: pointer;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: absolute;
 }
 
-.cub:nth-child(odd) .logo_main {
-	-webkit-transform:rotate(180deg);
+.cub.rotate .logo_main {
+	-webkit-transform: rotate(180deg);
 }
 
 .black {
@@ -178,10 +184,13 @@ input.invalid {
 	color: white;
 	cursor: pointer;
 	margin-top: 20px;
+	display: inline-block;
+	padding: 3px;
 }
 
 .submit_order:hover {
-	text-decoration: underline;
+	color: black;
+	background-color: white;
 }
 
 .order_title {

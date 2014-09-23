@@ -136,6 +136,11 @@ app.route('/submit_order').post(function(req, res) {
   var post = req.body;
   var order = new Order();
 
+  Item.findById(post.item).exec(function(err, item) {
+    --item.size[post.size];
+    item.save();
+  });
+
   order.items.push({
     item_id: post.item,
     size: post.size
@@ -157,6 +162,7 @@ app.route('/submit_order').post(function(req, res) {
     });
   });
 });
+
 
 // ------------------------
 // *** Index Block ***

@@ -9,19 +9,30 @@ block content_style
 block content_scripts
 	script(type='text/javascript', src='/scripts/add.js')
 
+mixin blocks(id)
+	label
+		input(type='checkbox', value='cool')
+		| 180°
+	select(name='color')
+		option(value='black') черный
+		option(value='white') белый
+	input(type='text', name='title')
+	!= ' || '
+	input(type="file", name=id,)
+
 block content
 	.form_block
 		a.back_link(href='/auth') < Назад
 		.title ВИД ГЛАВНОЙ СТРАНИЦЫ
 		form(action="/auth/design", enctype="multipart/form-data", method="post")
 			.form_title Левый верхний:
-			input(type="file", name="l_up",)
+			+blocks('l_up')
 			.form_title Правый верхний:
-			input(type="file", name="r_up",)
+			+blocks('r_up')
 			.form_title Левый нижний:
-			input(type="file", name="l_dw",)
+			+blocks('l_dw')
 			.form_title Правый нижний:
-			input(type="file", name="r_dw",)
+			+blocks('r_dw')
 			br
 			br
 			input(type='submit', value='отправить')
