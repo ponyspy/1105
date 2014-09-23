@@ -1,5 +1,9 @@
 $(document).ready(function() {
 	var id;
+	$(document).on('click', function(event) {
+		if ($(event.target).closest('.order_block').length) return;
+		$('.order_block').hide();
+	});
 
 	var random = {
 		buf: 0,
