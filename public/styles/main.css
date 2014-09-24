@@ -91,9 +91,22 @@
 
 .black .buy_item {
 	background-color: black;
+	color: white;
+}
+
+.buy_title_block {
+	width: 50px;
+	height: 100%;
+	background-color: white;
+	position: absolute;
+}
+
+.black .buy_title_block {
+	background-color: black;
 }
 
 .buy_title {
+	width: 300px;
 	margin-top: 10px;
 	margin-left: 10px;
 	text-transform: uppercase;
@@ -101,14 +114,12 @@
 	-webkit-transform-origin: 10px 15px;
 	font: 18pt/18pt Helvetica;
 	font-weight: bold;
-	position: absolute;
-	/*outline: 1px solid red;*/
 }
 
 .buy_image {
 	width: 100%;
 	height: 100%;
-	margin-left: 50px;
+	position: absolute;
 	cursor: pointer;
 	background-size: cover;
 	background-position: center;

@@ -14,9 +14,10 @@ mixin getItems(category)
 	each item in items
 		if (item.category == category)
 			.buy_item(id=item._id)
-				.buy_btn buy
-				.buy_title= item.title.ru
 				.buy_image(style='background-image: url(' + item.image + ')')
+				.buy_title_block
+					.buy_btn buy
+					.buy_title= item.title.ru
 
 
 block content
