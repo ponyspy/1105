@@ -10,24 +10,13 @@ body {
 	right: 0;
 	z-index: 999;
 	background-color: black;
-	/*outline: 1px solid red;*/
 }
 
 .logo {
-	width: 60px;
-	margin-top: 4px;
-	margin-left: 25px;
-	color: white;
-	font: 18pt/18pt Helvetica;
-	font-weight: bold;
-	text-align: center;
-	background-color: black;
-	position: relative;
-	/*border: 1px solid white;*/
+	width: 30px;
+	margin: 5px auto;
+	display: block;
 	cursor: pointer;
-	-webkit-transform: rotate(90deg);
-	transform: rotate(90deg);
-	-webkit-transform-origin: 0 50%;
 }
 
 .order_block {

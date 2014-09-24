@@ -112,7 +112,7 @@
 	text-transform: uppercase;
 	-webkit-transform:rotate(90deg);
 	-webkit-transform-origin: 10px 15px;
-	font: 18pt/18pt Helvetica;
+	font: 16pt/18pt Helvetica;
 	font-weight: bold;
 }
 
@@ -136,8 +136,8 @@
 .buy_btn {
 	position: absolute;
 	left: 12px;
-	bottom: 10px;
-	font: 12pt/14pt Helvetica;
+	bottom: 12px;
+	font: 11pt/13pt Helvetica;
 	cursor: pointer;
 }
 
@@ -161,7 +161,7 @@
 .order_block input {
 	display: block;
 	margin-top: 10px;
-	font: 12pt/16pt Helvetica;
+	font: 11pt/13pt Helvetica;
 	outline: none;
 	width: 300px;
 	background-color: black;
@@ -175,7 +175,7 @@ input.invalid {
 }
 
 .submit_order {
-	font: 12pt/14pt Helvetica;
+	font: 11pt/13pt Helvetica;
 	color: white;
 	cursor: pointer;
 	margin-top: 20px;
@@ -188,7 +188,7 @@ input.invalid {
 }
 
 .order_title {
-	font: 18pt/18pt Helvetica;
+	font: 16pt/18pt Helvetica;
 	margin-bottom: 20px;
 	font-weight: bold;
 	text-transform: uppercase;
@@ -197,7 +197,7 @@ input.invalid {
 
 .order_price {
 	color: white;
-	font: 12pt/14pt Helvetica;
+	font: 11pt/13pt Helvetica;
 }
 
 .order_block_title {
@@ -205,5 +205,5 @@ input.invalid {
 	clear: both;
 	margin-right: 5px;
 	color: white;
-	font: 12pt/16pt Helvetica;
+	font: 11pt/13pt Helvetica;
 }
