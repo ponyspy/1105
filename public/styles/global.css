@@ -15,7 +15,8 @@ body {
 
 .logo {
 	width: 60px;
-	margin-top: 35px;
+	margin-top: 4px;
+	margin-left: 25px;
 	color: white;
 	font: 18pt/18pt Helvetica;
 	font-weight: bold;
@@ -26,6 +27,7 @@ body {
 	cursor: pointer;
 	-webkit-transform: rotate(90deg);
 	transform: rotate(90deg);
+	-webkit-transform-origin: 0 50%;
 }
 
 .order_block {

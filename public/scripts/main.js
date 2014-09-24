@@ -48,6 +48,7 @@ $(document).ready(function() {
 	$('.buy_btn').click(function(event) {
 		id = $(this).parents('.buy_item').attr('id');
 		$('.order_name, .order_email, .order_phone, .order_adress').val('');
+		$('.order_size').children('option').attr('checked', false);
 
 		$.post('/get_item', {id: id}).done(function(item) {
 			$('.order_title').text(item.title.ru);
