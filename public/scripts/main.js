@@ -47,6 +47,7 @@ $(document).ready(function() {
 
 	$('.buy_btn').click(function(event) {
 		id = $(this).parents('.buy_item').attr('id');
+		$('.order_name, .order_email, .order_phone, .order_adress').val('');
 
 		$.post('/get_item', {id: id}).done(function(item) {
 			$('.order_title').text(item.title.ru);
@@ -64,12 +65,13 @@ $(document).ready(function() {
 		var item = id;
 		var name = $('.order_name').val();
 		var email = $('.order_email').val();
+		var phone = $('.order_phone').val();
 		var adress = $('.order_adress').val();
 		var size = $('.order_size').find(':selected').val();
 		var valid = validate.email(email);
 
 		if (valid) {
-			$.post('/submit_order', {item: item, size: size, adress: adress, name: name, email: email}).done(function(order) {
+			$.post('/submit_order', {item: item, size: size, adress: adress, name: name, phone: phone, email: email}).done(function(order) {
 					$('.order_block').hide();
 			});
 		}

@@ -37,6 +37,7 @@ var orderSchema = new Schema({
 	}],
 	name: String,
 	adress: String,
+	phone: String,
 	email: String,
 	date: {type: Date, default: Date.now}
 });

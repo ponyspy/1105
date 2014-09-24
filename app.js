@@ -147,6 +147,7 @@ app.route('/submit_order').post(function(req, res) {
   });
   order.adress = post.adress;
   order.email = post.email;
+  order.phone = post.phone;
   order.name = post.name;
 
   order.save(function(err, order) {
@@ -154,7 +155,11 @@ app.route('/submit_order').post(function(req, res) {
       from: 'order@1105.ru',
       to: 'desade4me@gmail.com',
       subject: "Новый заказ!",
-      body: 'Имя: ' + order.name + '\n\n' + 'E-mail: ' + order.email + '\n\n' + 'Адрес доставки: ' + order.adress
+      body: 'Название позиции:' + order.items[0].title + '\n\n' +
+            'Имя: ' + order.name + '\n\n' +
+            'E-mail: ' + order.email + '\n\n' +
+            'Телефон:' + order.phone + '\n\n' +
+            'Адрес доставки: ' + order.adress
     });
 
     orderMsg.send(function(err){
