@@ -135,9 +135,9 @@
 
 .buy_btn {
 	position: absolute;
-	left: 14px;
+	left: 12px;
 	bottom: 10px;
-	font: 10pt/12pt Helvetica;
+	font: 12pt/14pt Helvetica;
 	cursor: pointer;
 }
 
@@ -146,15 +146,15 @@
 }
 
 .order_block {
-	width: 550px;
-	height: 400px;
+	width: 300px;
+	height: 300px;
 	padding: 10px;
 	position: absolute;
 	background-color: black;
 	z-index: 99999999;
 	left: 50%;
 	top: 25%;
-	margin-left: -275px;
+	margin-left: -150px;
 	border: 5px solid black;
 }
 
@@ -202,9 +202,8 @@ input.invalid {
 
 .order_block_title {
 	float: left;
-/*	margin-top: 10px;
-	margin-bottom: 10px;*/
+	clear: both;
 	margin-right: 5px;
 	color: white;
-	font: 10pt/12pt Helvetica;
+	font: 12pt/16pt Helvetica;
 }
