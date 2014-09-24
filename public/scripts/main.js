@@ -51,6 +51,11 @@ $(document).ready(function() {
 		$.post('/get_item', {id: id}).done(function(item) {
 			$('.order_title').text(item.title.ru);
 			$('.order_price').text((item.price || 0) + ' р.');
+			$.each(item.size, function(index, val) {
+				val <= 0
+					? $('.order_size option[value="' + index +'"]').attr('disabled', true)
+					: false
+			});
 			$('.order_block').show();
 		});
 	});
