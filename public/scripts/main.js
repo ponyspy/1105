@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	var id;
+
 	$(document).on('click', function(event) {
 		if ($(event.target).closest('.order_block').length) return;
 		$('.order_block').hide();
@@ -28,6 +29,25 @@ $(document).ready(function() {
 		}
 	}
 
+	function submitOrder() {
+		var item = id;
+		var name = $('.order_name').val();
+		var email = $('.order_email').val();
+		var phone = $('.order_phone').val();
+		var adress = $('.order_adress').val();
+		var size = $('.order_size').find(':selected').val();
+		var valid = validate.email(email);
+
+		if (valid) {
+			$.post('/submit_order', {item: item, size: size, adress: adress, name: name, phone: phone, email: email}).done(function(order) {
+					$('.order_block').hide();
+			});
+		}
+		else {
+			$('.order_email').addClass('invalid');
+		}
+	}
+
 	$('.logo_main').click(function(event) {
 		$(this).hide();
 		$(this).next('.buy_items').show();
@@ -48,36 +68,29 @@ $(document).ready(function() {
 	$('.buy_btn').click(function(event) {
 		id = $(this).parents('.buy_item').attr('id');
 		$('.order_name, .order_email, .order_phone, .order_adress').val('');
-		$('.order_size').children('option').attr('checked', false);
+		$('.order_size').children('option').attr('disabled', false);
 
 		$.post('/get_item', {id: id}).done(function(item) {
 			$('.order_title').text(item.title.ru);
 			$('.order_price').text((item.price || 0) + ' р.');
+
 			$.each(item.size, function(index, val) {
 				val <= 0
 					? $('.order_size option[value="' + index +'"]').attr('disabled', true)
 					: false
 			});
+
+			var no = $('.order_size option').filter(function() {
+				return $(this).prop('disabled');
+			});
+
+			no.length > 0
+				? $('.submit_order').off().addClass('no_order').text('Нет в наличии!')
+				: $('.submit_order').on('click', submitOrder).removeClass('no_order').text('Заказать');
+
 			$('.order_block').show();
 		});
 	});
 
-	$('.submit_order').click(function() {
-		var item = id;
-		var name = $('.order_name').val();
-		var email = $('.order_email').val();
-		var phone = $('.order_phone').val();
-		var adress = $('.order_adress').val();
-		var size = $('.order_size').find(':selected').val();
-		var valid = validate.email(email);
-
-		if (valid) {
-			$.post('/submit_order', {item: item, size: size, adress: adress, name: name, phone: phone, email: email}).done(function(order) {
-					$('.order_block').hide();
-			});
-		}
-		else {
-			$('.order_email').addClass('invalid');
-		}
-	});
+	$('.submit_order').on('click', submitOrder);
 });

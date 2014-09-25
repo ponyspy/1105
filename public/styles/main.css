@@ -183,6 +183,12 @@ input.invalid {
 	padding: 3px;
 }
 
+.no_order {
+	color: red;
+	text-decoration: none!important;
+	cursor: default;
+}
+
 .submit_order:hover {
 	text-decoration: underline;
 }
