@@ -256,6 +256,20 @@ app.route('/auth/orders/:id').get(checkAuth, function(req, res) {
 
 
 // ------------------------
+// *** Delete orders Block ***
+// ------------------------
+
+
+app.route('/rm_order').post(checkAuth, function(req, res) {
+  var id = req.body.id;
+
+  Order.findByIdAndRemove(id).exec(function(err, order) {
+    res.send('ok');
+  });
+});
+
+
+// ------------------------
 // *** Admin Items Block ***
 // ------------------------
 
@@ -311,6 +325,21 @@ add_item.post(checkAuth, function(req, res) {
   }
 
 
+});
+
+
+// ------------------------
+// *** Delete Items Block ***
+// ------------------------
+
+
+app.route('/rm_item').post(checkAuth, function(req, res) {
+  var id = req.body.id;
+
+  Item.findByIdAndRemove(id).exec(function(err, item) {
+    deleteFolderRecursive(__dirname + '/public/images/items/' + id);
+    res.send('ok');
+  });
 });
 
 
