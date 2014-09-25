@@ -216,16 +216,30 @@ edit_design.get(checkAuth, function(req, res) {
 edit_design.post(checkAuth, function(req, res) {
   var files = req.files;
 
-  if (files.l_up)
-    fs.rename(files.l_up.path, __dirname + '/public/images/design/main/l_up.jpg');
-  if (files.r_up)
-    fs.rename(files.r_up.path, __dirname + '/public/images/design/main/r_up.jpg');
-  if (files.l_dw)
-    fs.rename(files.l_dw.path, __dirname + '/public/images/design/main/l_dw.jpg');
-  if (files.r_dw)
-    fs.rename(files.r_dw.path, __dirname + '/public/images/design/main/r_dw.jpg');
-
-  res.redirect('back');
+  async.parallel([
+    function(callback) {
+      files.l_up
+        ? gm(files.l_up.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/l_up.jpg', callback)
+        : callback(null, false)
+    },
+    function(callback) {
+      files.r_up
+        ? gm(files.r_up.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/r_up.jpg', callback)
+        : callback(null, false)
+    },
+    function(callback) {
+      files.l_dw
+        ? gm(files.l_dw.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/l_dw.jpg', callback)
+        : callback(null, false)
+    },
+    function(callback) {
+      files.r_dw
+        ? gm(files.r_dw.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/r_dw.jpg', callback)
+        : callback(null, false)
+    }
+  ], function(results) {
+    res.redirect('back');
+  });
 });
 
 
@@ -308,7 +322,7 @@ add_item.post(checkAuth, function(req, res) {
     var newPath = __dirname + '/public/images/items/' + item._id + '/main.jpg';
 
     fs.mkdir(__dirname + '/public/images/items/' + item._id, function() {
-      gm(files.image.path).resize(1600, false).quality(80).noProfile().write(newPath, function() {
+      gm(files.image.path).resize(800, false).quality(90).noProfile().write(newPath, function() {
         item.image = '/images/items/' + item._id + '/main.jpg';
         item.save(function() {
           fs.unlink(files.image.path);
