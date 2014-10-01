@@ -112,6 +112,7 @@ app.route('/get_item').post(function(req, res) {
 app.route('/submit_order').post(function(req, res) {
 	var post = req.body;
 	var order = new Order();
+	var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 
 	Item.findById(post.item).exec(function(err, item) {
 		--item.size[post.size];
@@ -133,7 +134,7 @@ app.route('/submit_order').post(function(req, res) {
 					subject: 'Новый заказ!',
 					attachment: [
 						{data: "<b>Позиция:</b>" +
-										"<a href='http://127.0.0.1:3000/auth/orders/" + order._id + "'>" + item.title.ru + "</a>" +
+										"<a href='" + fullUrl + "order/" + order._id + "'>" + item.title.ru + "</a>" +
 										"<br>" +
 										"<br>" +
 										"<b>Имя:</b>" + order.name +
