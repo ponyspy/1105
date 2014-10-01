@@ -1,19 +1,27 @@
 var fs = require('fs');
 var gm = require('gm').subClass({ imageMagick: true });
 var async = require('async');
-var Email = require('email').Email;
+var email = require('emailjs')
+		server = email.server.connect({
+			user: "desade4me",
+			password: "cer3000cool",
+			host: "smtp.gmail.com",
+			port: "465",
+			ssl: true
+});
 
 var mongoose = require('mongoose'),
-    models = require('./models/main.js');
-      mongoose.connect('localhost', 'main');
+		models = require('./models/main.js');
+			mongoose.connect('localhost', 'main');
 
 var express = require('express'),
-    bodyParser = require('body-parser'),
-    multer = require('multer'),
-    cookieParser = require('cookie-parser'),
-    session = require('express-session'),
-    methodOverride = require('method-override'),
-      app = express();
+		accepts = require('accepts'),
+		bodyParser = require('body-parser'),
+		multer = require('multer'),
+		cookieParser = require('cookie-parser'),
+		session = require('express-session'),
+		methodOverride = require('method-override'),
+			app = express();
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
@@ -27,53 +35,22 @@ app.use(methodOverride());
 app.use(cookieParser());
 
 app.use(session({
-  key: '1105.sess',
-  resave: false,
-  saveUninitialized: false,
-  secret: 'keyboard cat',
-  cookie: {
-    path: '/',
-    maxAge: 1000 * 60 * 60 // 1 hour
-  }
+	key: '1105.sess',
+	resave: false,
+	saveUninitialized: false,
+	secret: 'keyboard cat',
+	cookie: {
+		path: '/',
+		maxAge: 1000 * 60 * 60 // 1 hour
+	}
 }));
 
 
 app.use(function(req, res, next) {
-  res.locals.session = req.session;
-  res.locals.locale = req.cookies.locale || 'ru';
-  next();
+	res.locals.session = req.session;
+	res.locals.locale = req.cookies.locale || 'ru';
+	next();
 });
-
-
-// app.use(function(req, res, next) {
-//   res.status(404);
-
-//   // respond with html page
-//   if (req.accepts('html')) {
-//     res.render('error', { url: req.url, status: 404 });
-//     return;
-//   }
-
-//   // respond with json
-//   if (req.accepts('json')) {
-//       res.send({
-//       error: {
-//         status: 'Not found'
-//       }
-//     });
-//     return;
-//   }
-
-//   // default to plain-text
-//   res.type('txt').send('Not found');
-// });
-
-// app.use(function(err, req, res, next) {
-//   var status = err.status || 500;
-
-//   res.status(status);
-//   res.render('error', { error: err, status: status });
-// });
 
 
 // -------------------
@@ -92,10 +69,10 @@ var Order = models.Order;
 
 
 function checkAuth (req, res, next) {
-  if (req.session.user_id)
-    next();
-  else
-    res.redirect('/login');
+	if (req.session.user_id)
+		next();
+	else
+		res.redirect('/login');
 }
 
 
@@ -105,17 +82,17 @@ function checkAuth (req, res, next) {
 
 
 var deleteFolderRecursive = function(path) {
-  if( fs.existsSync(path) ) {
-    fs.readdirSync(path).forEach(function(file,index){
-      var curPath = path + "/" + file;
-      if(fs.statSync(curPath).isDirectory()) {
-        deleteFolderRecursive(curPath);
-      } else {
-        fs.unlinkSync(curPath);
-      }
-    });
-    fs.rmdirSync(path);
-  }
+	if( fs.existsSync(path) ) {
+		fs.readdirSync(path).forEach(function(file,index){
+			var curPath = path + "/" + file;
+			if(fs.statSync(curPath).isDirectory()) {
+				deleteFolderRecursive(curPath);
+			} else {
+				fs.unlinkSync(curPath);
+			}
+		});
+		fs.rmdirSync(path);
+	}
 };
 
 
@@ -125,48 +102,61 @@ var deleteFolderRecursive = function(path) {
 
 
 app.route('/get_item').post(function(req, res) {
-  var id = req.body.id;
+	var id = req.body.id;
 
-  Item.findById(id).lean().exec(function(err, item) {
-    res.send(item);
-  });
+	Item.findById(id).lean().exec(function(err, item) {
+		res.send(item);
+	});
 });
 
 app.route('/submit_order').post(function(req, res) {
-  var post = req.body;
-  var order = new Order();
+	var post = req.body;
+	var order = new Order();
 
-  Item.findById(post.item).exec(function(err, item) {
-    --item.size[post.size];
+	Item.findById(post.item).exec(function(err, item) {
+		--item.size[post.size];
 
-    order.adress = post.adress;
-    order.email = post.email;
-    order.phone = post.phone;
-    order.name = post.name;
-    order.items.push({
-      item_id: post.item,
-      size: post.size
-    });
+		order.adress = post.adress;
+		order.email = post.email;
+		order.phone = post.phone;
+		order.name = post.name;
+		order.items.push({
+			item_id: post.item,
+			size: post.size
+		});
 
-    item.save(function(err, item) {
-      order.save(function(err, order) {
-        var orderMsg = new Email({
-          from: 'order@11051105.ru',
-          to: 'desade4me@gmail.com',
-          subject: 'Новый заказ!',
-          body: "Название позиции: <a href='http://127.0.0.1:3000/auth/orders/" + item._id + "'>" + item.title.ru + '</a>' + '\n\n' +
-                  'Имя: ' + order.name + '\n\n' +
-                  'E-mail: ' + order.email + '\n\n' +
-                  'Телефон:' + order.phone + '\n\n' +
-                  'Адрес доставки: ' + order.adress
-        });
+		item.save(function(err, item) {
+			order.save(function(err, order) {
+				var orderMsg = {
+					from: 'order@11051105.ru',
+					to: 'desade4me@gmail.com',
+					subject: 'Новый заказ!',
+					attachment: [
+						{data: "<b>Позиция:</b>" +
+										"<a href='http://127.0.0.1:3000/auth/orders/" + order._id + "'>" + item.title.ru + "</a>" +
+										"<br>" +
+										"<br>" +
+										"<b>Имя:</b>" + order.name +
+										"<br>" +
+										"<br>" +
+										"<b>E-mail:</b>" + order.email +
+										"<br>" +
+										"<br>" +
+										"<b>Телефон:</b>" + order.phone +
+										"<br>" +
+										"<br>" +
+										"<b>Адрес доставки:</b>" + order.adress
 
-        orderMsg.send(function(err){
-          res.send(order);
-        });
-      });
-    });
-  });
+										, alternative:true}
+					]
+				}
+
+				server.send(orderMsg, function(err){
+					res.send(order);
+				});
+			});
+		});
+	});
 });
 
 
@@ -176,9 +166,9 @@ app.route('/submit_order').post(function(req, res) {
 
 
 app.route('/').get(function(req, res) {
-  Item.find().exec(function(err, items) {
-    res.render('main', {items: items});
-  });
+	Item.find().exec(function(err, items) {
+		res.render('main', {items: items});
+	});
 });
 
 
@@ -188,8 +178,8 @@ app.route('/').get(function(req, res) {
 
 
 app.route('/lang/:locale').get(function(req, res) {
-  res.cookie('locale', req.params.locale);
-  res.redirect('back');
+	res.cookie('locale', req.params.locale);
+	res.redirect('back');
 });
 
 
@@ -199,7 +189,7 @@ app.route('/lang/:locale').get(function(req, res) {
 
 
 app.route('/auth').get(checkAuth, function (req, res) {
-  res.render('auth');
+	res.render('auth');
 });
 
 
@@ -211,36 +201,36 @@ app.route('/auth').get(checkAuth, function (req, res) {
 var edit_design = app.route('/auth/design');
 
 edit_design.get(checkAuth, function(req, res) {
-  res.render('auth/design');
+	res.render('auth/design');
 });
 
 edit_design.post(checkAuth, function(req, res) {
-  var files = req.files;
+	var files = req.files;
 
-  async.parallel([
-    function(callback) {
-      files.l_up
-        ? gm(files.l_up.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/l_up.jpg', callback)
-        : callback(null, false)
-    },
-    function(callback) {
-      files.r_up
-        ? gm(files.r_up.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/r_up.jpg', callback)
-        : callback(null, false)
-    },
-    function(callback) {
-      files.l_dw
-        ? gm(files.l_dw.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/l_dw.jpg', callback)
-        : callback(null, false)
-    },
-    function(callback) {
-      files.r_dw
-        ? gm(files.r_dw.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/r_dw.jpg', callback)
-        : callback(null, false)
-    }
-  ], function(results) {
-    res.redirect('back');
-  });
+	async.parallel([
+		function(callback) {
+			files.l_up
+				? gm(files.l_up.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/l_up.jpg', callback)
+				: callback(null, false)
+		},
+		function(callback) {
+			files.r_up
+				? gm(files.r_up.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/r_up.jpg', callback)
+				: callback(null, false)
+		},
+		function(callback) {
+			files.l_dw
+				? gm(files.l_dw.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/l_dw.jpg', callback)
+				: callback(null, false)
+		},
+		function(callback) {
+			files.r_dw
+				? gm(files.r_dw.path).resize(800, false).quality(90).noProfile().write(__dirname + '/public/images/design/main/r_dw.jpg', callback)
+				: callback(null, false)
+		}
+	], function(results) {
+		res.redirect('back');
+	});
 });
 
 
@@ -250,9 +240,9 @@ edit_design.post(checkAuth, function(req, res) {
 
 
 app.route('/auth/orders').get(checkAuth, function(req, res) {
-  Order.find().populate('items.item_id').exec(function(err, orders) {
-    res.render('auth/orders', {orders: orders});
-  });
+	Order.find().populate('items.item_id').exec(function(err, orders) {
+		res.render('auth/orders', {orders: orders});
+	});
 });
 
 
@@ -262,11 +252,11 @@ app.route('/auth/orders').get(checkAuth, function(req, res) {
 
 
 app.route('/auth/orders/:id').get(checkAuth, function(req, res) {
-  var id = req.params.id;
+	var id = req.params.id;
 
-  Order.findById(id).populate('items.item_id').exec(function(err, order) {
-    res.render('auth/orders/order.jade', {order: order});
-  });
+	Order.findById(id).populate('items.item_id').exec(function(err, order) {
+		res.render('auth/orders/order.jade', {order: order});
+	});
 });
 
 
@@ -276,11 +266,11 @@ app.route('/auth/orders/:id').get(checkAuth, function(req, res) {
 
 
 app.route('/rm_order').post(checkAuth, function(req, res) {
-  var id = req.body.id;
+	var id = req.body.id;
 
-  Order.findByIdAndRemove(id).exec(function(err, order) {
-    res.send('ok');
-  });
+	Order.findByIdAndRemove(id).exec(function(err, order) {
+		res.send('ok');
+	});
 });
 
 
@@ -290,9 +280,9 @@ app.route('/rm_order').post(checkAuth, function(req, res) {
 
 
 app.route('/auth/items').get(checkAuth, function(req, res) {
-  Item.find().exec(function(err, items) {
-    res.render('auth/items', {items: items});
-  });
+	Item.find().exec(function(err, items) {
+		res.render('auth/items', {items: items});
+	});
 });
 
 
@@ -304,40 +294,40 @@ app.route('/auth/items').get(checkAuth, function(req, res) {
 var add_item = app.route('/auth/items/add');
 
 add_item.get(checkAuth, function(req, res) {
-  res.render('auth/items/add.jade');
+	res.render('auth/items/add.jade');
 });
 
 add_item.post(checkAuth, function(req, res) {
-  var item = new Item();
-  var post = req.body;
-  var files = req.files;
+	var item = new Item();
+	var post = req.body;
+	var files = req.files;
 
-  item.title.ru = post.ru.title;
-  item.description.ru = post.ru.description;
-  item.category = post.category;
-  item.price = post.price;
-  item.size = post.size;
+	item.title.ru = post.ru.title;
+	item.description.ru = post.ru.description;
+	item.category = post.category;
+	item.price = post.price;
+	item.size = post.size;
 
 
-  if (files.image) {
-    var newPath = __dirname + '/public/images/items/' + item._id + '/main.jpg';
+	if (files.image) {
+		var newPath = __dirname + '/public/images/items/' + item._id + '/main.jpg';
 
-    fs.mkdir(__dirname + '/public/images/items/' + item._id, function() {
-      gm(files.image.path).resize(800, false).quality(90).noProfile().write(newPath, function() {
-        item.image = '/images/items/' + item._id + '/main.jpg';
-        item.save(function() {
-          fs.unlink(files.image.path);
-          res.redirect('/auth/items');
-        });
-      });
-    });
-  }
-  else {
-    item.save(function() {
-      // fs.unlink(files.image.path);
-      res.redirect('/auth/items');
-    });
-  }
+		fs.mkdir(__dirname + '/public/images/items/' + item._id, function() {
+			gm(files.image.path).resize(800, false).quality(90).noProfile().write(newPath, function() {
+				item.image = '/images/items/' + item._id + '/main.jpg';
+				item.save(function() {
+					fs.unlink(files.image.path);
+					res.redirect('/auth/items');
+				});
+			});
+		});
+	}
+	else {
+		item.save(function() {
+			// fs.unlink(files.image.path);
+			res.redirect('/auth/items');
+		});
+	}
 
 
 });
@@ -349,12 +339,12 @@ add_item.post(checkAuth, function(req, res) {
 
 
 app.route('/rm_item').post(checkAuth, function(req, res) {
-  var id = req.body.id;
+	var id = req.body.id;
 
-  Item.findByIdAndRemove(id).exec(function(err, item) {
-    deleteFolderRecursive(__dirname + '/public/images/items/' + id);
-    res.send('ok');
-  });
+	Item.findByIdAndRemove(id).exec(function(err, item) {
+		deleteFolderRecursive(__dirname + '/public/images/items/' + id);
+		res.send('ok');
+	});
 });
 
 
@@ -366,47 +356,47 @@ app.route('/rm_item').post(checkAuth, function(req, res) {
 var edit_items = app.route('/auth/items/edit/:item_id');
 
 edit_items.get(checkAuth, function(req, res) {
-  var id = req.params.item_id;
+	var id = req.params.item_id;
 
-  Item.findById(id).exec(function(err, item) {
-    res.render('auth/items/edit.jade', {item: item});
-  });
+	Item.findById(id).exec(function(err, item) {
+		res.render('auth/items/edit.jade', {item: item});
+	});
 });
 
 edit_items.post(checkAuth, function(req, res) {
-  var id = req.params.item_id;
-  var post = req.body;
-  var files = req.files;
+	var id = req.params.item_id;
+	var post = req.body;
+	var files = req.files;
 
-  Item.findById(id).exec(function(err, item) {
+	Item.findById(id).exec(function(err, item) {
 
-    item.title.ru = post.ru.title;
-    item.description.ru = post.ru.description;
-    item.category = post.category;
-    item.price = post.price;
-    item.size = post.size;
+		item.title.ru = post.ru.title;
+		item.description.ru = post.ru.description;
+		item.category = post.category;
+		item.price = post.price;
+		item.size = post.size;
 
-    if (files.image) {
-      var newPath = __dirname + '/public/images/items/' + item._id + '/main.jpg';
+		if (files.image) {
+			var newPath = __dirname + '/public/images/items/' + item._id + '/main.jpg';
 
-      fs.mkdir(__dirname + '/public/images/items/' + item._id, function() {
-        gm(files.image.path).resize(1600, false).quality(80).noProfile().write(newPath, function() {
-          item.image = '/images/items/' + item._id + '/main.jpg';
-          item.save(function() {
-            fs.unlink(files.image.path);
-            res.redirect('/auth/items');
-          });
-        });
-      });
-    }
-    else {
-      item.save(function() {
-        // fs.unlink(files.image.path);
-        res.redirect('/auth/items');
-      });
-    }
+			fs.mkdir(__dirname + '/public/images/items/' + item._id, function() {
+				gm(files.image.path).resize(1600, false).quality(80).noProfile().write(newPath, function() {
+					item.image = '/images/items/' + item._id + '/main.jpg';
+					item.save(function() {
+						fs.unlink(files.image.path);
+						res.redirect('/auth/items');
+					});
+				});
+			});
+		}
+		else {
+			item.save(function() {
+				// fs.unlink(files.image.path);
+				res.redirect('/auth/items');
+			});
+		}
 
-  });
+	});
 });
 
 
@@ -418,19 +408,19 @@ edit_items.post(checkAuth, function(req, res) {
 var login = app.route('/login');
 
 login.get(function (req, res) {
-  res.render('login');
+	res.render('login');
 });
 
 login.post(function(req, res) {
-  var post = req.body;
+	var post = req.body;
 
-  User.findOne({ 'login': post.login, 'password': post.password }, function (err, person) {
-    if (!person) return res.redirect('back');
-    req.session.user_id = person._id;
-    req.session.status = person.status;
-    req.session.login = person.login;
-    res.redirect('/auth');
-  });
+	User.findOne({ 'login': post.login, 'password': post.password }, function (err, person) {
+		if (!person) return res.redirect('back');
+		req.session.user_id = person._id;
+		req.session.status = person.status;
+		req.session.login = person.login;
+		res.redirect('/auth');
+	});
 });
 
 
@@ -440,10 +430,10 @@ login.post(function(req, res) {
 
 
 app.route('/logout').get(function (req, res) {
-  delete req.session.user_id;
-  delete req.session.login;
-  delete req.session.status;
-  res.redirect('back');
+	delete req.session.user_id;
+	delete req.session.login;
+	delete req.session.status;
+	res.redirect('back');
 });
 
 
@@ -455,29 +445,29 @@ app.route('/logout').get(function (req, res) {
 var registr = app.route('/registr');
 
 registr.get(function(req, res) {
-  if (!req.session.user_id)
-    res.render('registr');
-  else
-    res.redirect('/');
+	if (!req.session.user_id)
+		res.render('registr');
+	else
+		res.redirect('/');
 });
 
 registr.post(function (req, res) {
-  var post = req.body;
+	var post = req.body;
 
-  var user = new User({
-    login: post.login,
-    password: post.password,
-    email: post.email
-  });
+	var user = new User({
+		login: post.login,
+		password: post.password,
+		email: post.email
+	});
 
-  user.save(function(err, user) {
-    if(err) {throw err;}
-    console.log('New User created');
-    req.session.user_id = user._id;
-    req.session.login = user.login;
-    req.session.status = user.status;
-    res.redirect('/login');
-  });
+	user.save(function(err, user) {
+		if(err) {throw err;}
+		console.log('New User created');
+		req.session.user_id = user._id;
+		req.session.login = user.login;
+		req.session.status = user.status;
+		res.redirect('/login');
+	});
 });
 
 
@@ -487,15 +477,52 @@ registr.post(function (req, res) {
 
 
 app.route('/contacts').get(function (req, res) {
-  res.render('static/contacts.jade');
+	res.render('static/contacts.jade');
 });
 
 app.route('/sitemap.xml').get(function(req, res){
-  res.sendfile('sitemap.xml',  {root: './public'});
+	res.sendfile('sitemap.xml',  {root: './public'});
 });
 
 app.route('/robots.txt').get(function(req, res){
-  res.sendfile('robots.txt',  {root: './public'});
+	res.sendfile('robots.txt',  {root: './public'});
+});
+
+
+// ------------------------
+// *** Error Handling Block ***
+// ------------------------
+
+
+app.use(function(req, res, next) {
+	var accept = accepts(req);
+	res.status(404);
+
+	// respond with html page
+	if (accept.types('html')) {
+		res.render('error', { url: req.url, status: 404 });
+		return;
+	}
+
+	// respond with json
+	if (accept.types('json')) {
+			res.send({
+			error: {
+				status: 'Not found'
+			}
+		});
+		return;
+	}
+
+	// default to plain-text
+	res.type('txt').send('Not found');
+});
+
+app.use(function(err, req, res, next) {
+	var status = err.status || 500;
+
+	res.status(status);
+	res.render('error', { error: err, status: status });
 });
 
 

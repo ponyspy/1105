@@ -37,10 +37,12 @@ $(document).ready(function() {
 		var adress = $('.order_adress').val();
 		var size = $('.order_size').find(':selected').val();
 		var valid = validate.email(email);
+		$(this).off('click');
 
 		if (valid) {
 			$.post('/submit_order', {item: item, size: size, adress: adress, name: name, phone: phone, email: email}).done(function(order) {
 					$('.order_block').hide();
+					$(this).on('click', submitOrder);
 			});
 		}
 		else {
