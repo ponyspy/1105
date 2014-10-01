@@ -138,32 +138,33 @@ app.route('/submit_order').post(function(req, res) {
 
   Item.findById(post.item).exec(function(err, item) {
     --item.size[post.size];
-    item.save();
-  });
 
-  order.items.push({
-    item_id: post.item,
-    size: post.size
-  });
-  order.adress = post.adress;
-  order.email = post.email;
-  order.phone = post.phone;
-  order.name = post.name;
-
-  order.save(function(err, order) {
-    var orderMsg = new Email({
-      from: 'order@1105.ru',
-      to: 'desade4me@gmail.com',
-      subject: "Новый заказ!",
-      body: 'Название позиции:' + order.items[0].title + '\n\n' +
-            'Имя: ' + order.name + '\n\n' +
-            'E-mail: ' + order.email + '\n\n' +
-            'Телефон:' + order.phone + '\n\n' +
-            'Адрес доставки: ' + order.adress
+    order.adress = post.adress;
+    order.email = post.email;
+    order.phone = post.phone;
+    order.name = post.name;
+    order.items.push({
+      item_id: post.item,
+      size: post.size
     });
 
-    orderMsg.send(function(err){
-      res.send(order);
+    item.save(function(err, item) {
+      order.save(function(err, order) {
+        var orderMsg = new Email({
+          from: 'order@1105.ru',
+          to: 'desade4me@gmail.com',
+          subject: 'Новый заказ!',
+          body: 'Название позиции:' + item.title.ru + '\n\n' +
+                  'Имя: ' + order.name + '\n\n' +
+                  'E-mail: ' + order.email + '\n\n' +
+                  'Телефон:' + order.phone + '\n\n' +
+                  'Адрес доставки: ' + order.adress
+        });
+
+        orderMsg.send(function(err){
+          res.send(order);
+        });
+      });
     });
   });
 });

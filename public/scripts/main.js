@@ -84,7 +84,7 @@ $(document).ready(function() {
 				return $(this).prop('disabled');
 			});
 
-			no.length > 0
+			no.length == 4
 				? $('.submit_order').off().addClass('no_order').text('Нет в наличии!')
 				: $('.submit_order').on('click', submitOrder).removeClass('no_order').text('Заказать');
 
