@@ -151,10 +151,10 @@ app.route('/submit_order').post(function(req, res) {
     item.save(function(err, item) {
       order.save(function(err, order) {
         var orderMsg = new Email({
-          from: 'order@1105.ru',
+          from: 'order@11051105.ru',
           to: 'desade4me@gmail.com',
           subject: 'Новый заказ!',
-          body: 'Название позиции:' + item.title.ru + '\n\n' +
+          body: 'Название позиции: ' + item.title.ru + '\n\n' +
                   'Имя: ' + order.name + '\n\n' +
                   'E-mail: ' + order.email + '\n\n' +
                   'Телефон:' + order.phone + '\n\n' +
