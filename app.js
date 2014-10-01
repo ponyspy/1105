@@ -154,7 +154,7 @@ app.route('/submit_order').post(function(req, res) {
           from: 'order@11051105.ru',
           to: 'desade4me@gmail.com',
           subject: 'Новый заказ!',
-          body: 'Название позиции: ' + item.title.ru + '\n\n' +
+          body: "Название позиции: <a href='http://127.0.0.1:3000/auth/orders/" + item._id + "'>" + item.title.ru + '</a>' + '\n\n' +
                   'Имя: ' + order.name + '\n\n' +
                   'E-mail: ' + order.email + '\n\n' +
                   'Телефон:' + order.phone + '\n\n' +

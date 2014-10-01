@@ -140,3 +140,11 @@ input, textarea, select {
 	width: 60px;
 	margin-right: 10px;
 }
+
+.item_image {
+	width: 400px;
+}
+
+.menu_block {
+	display: none;
+}

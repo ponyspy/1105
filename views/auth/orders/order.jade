@@ -12,6 +12,7 @@ block content_scripts
 block content
 	a.back_link(href='/auth/orders') < Назад
 	.title= order.items[0].item_id.title.ru
+	img.item_image(src=order.items[0].item_id.image)
 	.form_title Дата заказа:
 	.date= order.date.getDate() + '.' + order.date.getMonth() + '.' + order.date.getFullYear()
 	.form_title Имя:
